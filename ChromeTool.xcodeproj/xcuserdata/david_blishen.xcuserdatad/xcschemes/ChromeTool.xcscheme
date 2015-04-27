@@ -48,7 +48,8 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C127D1761AADC7D300E5372E"
@@ -59,11 +60,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-allow leerodgers.com"
+            argument = "-allow weird.com"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-path /Users/home/Library/Application\ Support/Google/Chrome/Profile\ 1/Preferences"
+            argument = "-path /Users/david_blishen/Library/Application\ Support/Google/Chrome/Default/Preferences"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -76,7 +77,8 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C127D1761AADC7D300E5372E"

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C11B342D1AEE55A800F3F621 /* DBChromeUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B342C1AEE55A800F3F621 /* DBChromeUtility.m */; };
 		C127D17B1AADC7D300E5372E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C127D17A1AADC7D300E5372E /* Foundation.framework */; };
 		C127D17E1AADC7D300E5372E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C127D17D1AADC7D300E5372E /* main.m */; };
 		C127D1821AADC7D300E5372E /* ChromeTool.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C127D1811AADC7D300E5372E /* ChromeTool.1 */; };
@@ -38,6 +39,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C11B342B1AEE55A800F3F621 /* DBChromeUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBChromeUtility.h; sourceTree = "<group>"; };
+		C11B342C1AEE55A800F3F621 /* DBChromeUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBChromeUtility.m; sourceTree = "<group>"; };
 		C127D1771AADC7D300E5372E /* ChromeTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ChromeTool; sourceTree = BUILT_PRODUCTS_DIR; };
 		C127D17A1AADC7D300E5372E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C127D17D1AADC7D300E5372E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -83,6 +86,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C11B342A1AEE555E00F3F621 /* Functions */ = {
+			isa = PBXGroup;
+			children = (
+				C11B342B1AEE55A800F3F621 /* DBChromeUtility.h */,
+				C11B342C1AEE55A800F3F621 /* DBChromeUtility.m */,
+			);
+			name = Functions;
+			sourceTree = "<group>";
+		};
 		C127D16E1AADC7D300E5372E = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +123,7 @@
 		C127D17C1AADC7D300E5372E /* ChromeTool */ = {
 			isa = PBXGroup;
 			children = (
+				C11B342A1AEE555E00F3F621 /* Functions */,
 				C127D1881AADCB2C00E5372E /* JSON */,
 				C127D17D1AADC7D300E5372E /* main.m */,
 				C127D1811AADC7D300E5372E /* ChromeTool.1 */,
@@ -213,6 +226,7 @@
 			files = (
 				C127D1A61AADCB2C00E5372E /* SBJsonStreamParserAccumulator.m in Sources */,
 				C127D1AE1AADCB2C00E5372E /* SBJsonWriter.m in Sources */,
+				C11B342D1AEE55A800F3F621 /* DBChromeUtility.m in Sources */,
 				C127D1A41AADCB2C00E5372E /* SBJsonParser.m in Sources */,
 				C127D1A81AADCB2C00E5372E /* SBJsonStreamParserState.m in Sources */,
 				C127D1A31AADCB2C00E5372E /* NSObject+SBJson.m in Sources */,
@@ -337,6 +351,7 @@
 				C127D1871AADC7D300E5372E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
