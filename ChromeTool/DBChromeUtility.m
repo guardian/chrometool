@@ -15,6 +15,7 @@
     
     SBJsonParser *jsonParser;
     NSDictionary *chromeDict;
+    BOOL updateFile = NO;
     
     NSString *preferenceBackupPath = [NSString stringWithFormat:@"%@.backup", preferencePath];
     
@@ -44,45 +45,76 @@
     chromeDict = [jsonParser objectWithString:preferenceFile];
     [jsonParser release];
     
-    // Test the format of the file, at least as far as we care. We may add further tests later.
-    BOOL validFile = YES;
-    
-    // Is there a profile section?
-    if ([[chromeDict objectForKey:@"profile"] objectForKey:@"content_settings"]==nil){
-        validFile = NO;
-    };
-    
-    if (validFile==NO){
-        NSLog(@"We don't consider this a valid Chrome Preferences JSON file: %@", preferencePath);
-        return 1;
-    }
-    
     // Backup the original file
     [fm removeItemAtPath:preferenceBackupPath error:nil];
     [fm copyItemAtPath:preferencePath toPath:preferenceBackupPath error:nil];
     
     
-    // Get the object to update
-    NSMutableDictionary *patternDict = [[[chromeDict objectForKey:@"profile"] objectForKey:@"content_settings"] objectForKey:@"pattern_pairs"];
+    // We are going to check for a couple of variations to cover different chrome versions
     
-    // Manufacture the dict to insert
-    NSString *keyName = [NSString stringWithFormat:@"%@,*", allowedDomain];
-    NSDictionary *cookieDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"cookies"];
-    NSDictionary *insertionDict = [NSDictionary dictionaryWithObject:cookieDict forKey:keyName];
     
-    // Insert the dictionary into the pattern pairs
-    [patternDict addEntriesFromDictionary:insertionDict];
+    NSMutableDictionary *patternDict = [[[chromeDict objectForKey:@"profile"]
+                                         objectForKey:@"content_settings"]
+                                        objectForKey:@"pattern_pairs"];
+    
+    if (patternDict!=nil){
+        
+        NSLog(@"Located pattern_pairs in: %@", preferencePath);
+        NSLog(@"Allowing cookies for: %@", allowedDomain);
+
+        // Manufacture the dict to insert
+        NSString *keyName = [NSString stringWithFormat:@"%@,*", allowedDomain];
+        NSDictionary *exceptionDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"cookies"];
+        NSDictionary *insertionDict = [NSDictionary dictionaryWithObject:exceptionDict forKey:keyName];
+        
+        // Insert the dictionary into the pattern pairs
+        [patternDict addEntriesFromDictionary:insertionDict];
+        
+        // Trigger a file write later
+        updateFile = YES;
+    
+    } else {
+
+        NSLog(@"No pattern_pairs to update in: %@", preferencePath);
+    
+    };
+    
+    NSMutableDictionary *cookieDict = [[[[chromeDict objectForKey:@"profile"]
+                                         objectForKey:@"content_settings"]
+                                        objectForKey:@"exceptions"]
+                                       objectForKey:@"cookies"];
+ 
+    if (cookieDict!=nil){
+        
+        NSLog(@"Updating exceptions/cookies");
+        NSLog(@"Allowing cookies for: %@", allowedDomain);
+
+        // Manufacture the dict to insert
+        NSString *keyName = [NSString stringWithFormat:@"%@,*", allowedDomain];
+        NSDictionary *exceptionDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"setting"];
+        NSDictionary *insertionDict = [NSDictionary dictionaryWithObject:exceptionDict forKey:keyName];
+        
+        // Insert the dictionary into the pattern pairs
+        [cookieDict addEntriesFromDictionary:insertionDict];
+        
+        // Trigger a file write later
+        updateFile = YES;
+        
+    } else {
+        
+        NSLog(@"No exceptions/cookies to update in: %@", preferencePath);
+        
+    };
+
     
     // Write the updated file replacing the original. We've made a backup so we should be good.
-    NSLog(@"Allowing cookies for: %@", allowedDomain);
-    NSLog(@"File path: %@", preferencePath);
-    [[chromeDict JSONRepresentation] writeToFile:preferencePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    
+    if (updateFile){
+        NSLog(@"Updating file path: %@", preferencePath);
+        [[chromeDict JSONRepresentation] writeToFile:preferencePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
 
     return 0;
 }
 
 @end
-
-
-
-
